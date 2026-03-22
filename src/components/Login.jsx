@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ADMIN } from "../constants";
+import { DIREKTOR } from "../constants";
 
-export default function Login({ onLogin, teachers, students }) {
-  const [tab, setTab] = useState("admin");
+export default function Login({ onLogin, admins, teachers, students }) {
+  const [tab, setTab] = useState("direktor");
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const [err, setErr] = useState("");
@@ -11,20 +11,23 @@ export default function Login({ onLogin, teachers, students }) {
     e.preventDefault();
     setErr("");
 
-    if (tab === "admin" && ADMIN.username === u && ADMIN.password === p) {
-      onLogin(ADMIN);
+    if (tab === "direktor" && DIREKTOR.username === u && DIREKTOR.password === p) {
+      onLogin(DIREKTOR);
       return;
+    }
+    if (tab === 'admin') {
+      const a = admins.find(
+        (a) => a.username === u && a.password === p && a.status === 'active')
+      if (a) { onLogin(a); return; }
     }
     if (tab === "teacher") {
       const t = teachers.find(
-        (t) => t.username === u && t.password === p && t.status === "active"
-      );
+        (t) => t.username === u && t.password === p && t.status === "active")
       if (t) { onLogin(t); return; }
     }
     if (tab === "student") {
       const s = students.find(
-        (s) => s.username === u && s.password === p && s.status === "active"
-      );
+        (s) => s.username === u && s.password === p && s.status === "active")
       if (s) { onLogin(s); return; }
     }
     setErr("Login yoki parol noto'g'ri!");
@@ -35,17 +38,34 @@ export default function Login({ onLogin, teachers, students }) {
     setU("");
     setP("");
     setErr("");
+    console.log(id);
   }
 
-  const quickList =
-    tab === "admin"
-      ? [ADMIN]
-      : tab === "teacher"
-      ? teachers.filter((t) => t.status === "active").slice(0, 4)
-      : students.filter((s) => s.status === "active").slice(0, 4);
+  const TabSwitcher = (tab) => {
+    if(tab === 'direktor'){
+      return [DIREKTOR]
+    }
+    if(tab === 'admin'){
+      return admins.filter((a) => a.status === 'active')
+    }
+    if(tab === 'teacher'){
+      return teachers.filter((t) => t.status === 'active')
+    }
+    if(tab === 'student'){
+      return students.filter((s) => s.status === 'active')
+    }
+  }
+  const quickList = TabSwitcher(tab)
+  // const quickList =  
+  //   tab === "admin"
+  //     ? [ADMIN]
+  //     : tab === "teacher"
+  //     ? teachers.filter((t) => t.status === "active").slice(0, 4)
+  //     : students.filter((s) => s.status === "active").slice(0, 4)
+      
 
-  const roleLabel = { admin: "Admin", teacher: "Ustoz", student: "O'quvchi" };
-  const roleClass = { admin: "hr-a", teacher: "hr-t", student: "hr-s" };
+  const roleLabel = { admin: "Admin", teacher: "Ustoz", student: "O'quvchi", direktor: 'Direktor' };
+  const roleClass = { admin: "hr-a", teacher: "hr-t", student: "hr-s", direktor: 'hr-d' };
 
   return (
     <div className="lw">
@@ -60,9 +80,10 @@ export default function Login({ onLogin, teachers, students }) {
         {/* Role tabs */}
         <div className="rtabs">
           {[
-            ["admin",   "👑",   "Admin"],
+            ["direktor", "🧓", "Direktor"],
+            ["admin", "👑", "Admin"],
             ["teacher", "👨‍🏫", "Ustoz"],
-            ["student", "👨‍🎓", "O'quvchi"],
+            ["student", "👨‍🎓", "O'quvchi"]
           ].map(([id, ic, lb]) => (
             <button
               key={id}

@@ -5,13 +5,13 @@ export default function MyClass({ user, att, students }) {
 
   function getStats(id) {
     const records = att.filter((a) => a.studentId === id && a.teacherId === user.id);
-    const present  = records.filter((a) => a.status === "present").length;
+    const present = records.filter((a) => a.status === "present").length;
     return {
       total: records.length,
       present,
       absent: records.filter((a) => a.status === "absent").length,
-      late:   records.filter((a) => a.status === "late").length,
-      p:      pct(present, records.length),
+      late: records.filter((a) => a.status === "late").length,
+      p: pct(present, records.length),
     };
   }
 

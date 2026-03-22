@@ -1,13 +1,22 @@
 import { ini } from "../helpers";
 
 const NAV_CONFIG = {
+  direktor: [
+    {
+      sec: "Boshqaruv",
+      items: [
+        { id: "admincontrol", ic: "🛂", lb: "Adminlar Nazorati" },
+        { id: "payment", ic: "💵", lb: "Oylik Maoshlar" }, 
+      ],
+    },
+  ],
   admin: [
     {
       sec: "Asosiy",
       items: [
-        { id: "dash",     ic: "📊", lb: "Dashboard" },
-        { id: "att",      ic: "📋", lb: "Davomat jurnali" },
-        { id: "rep",      ic: "📈", lb: "Hisobotlar" },
+        { id: "dash", ic: "📊", lb: "Dashboard" },
+        { id: "att", ic: "📋", lb: "Davomat jurnali" },
+        { id: "rep", ic: "📈", lb: "Hisobotlar" },
       ],
     },
     {
@@ -22,8 +31,8 @@ const NAV_CONFIG = {
     {
       sec: "Menyu",
       items: [
-        { id: "dash",    ic: "📊", lb: "Dashboard" },
-        { id: "mark",    ic: "✅", lb: "Davomat olish" },
+        { id: "dash", ic: "📊", lb: "Dashboard" },
+        { id: "mark", ic: "✅", lb: "Davomat olish" },
         { id: "myclass", ic: "📋", lb: "Mening sinfim" },
       ],
     },
@@ -32,21 +41,22 @@ const NAV_CONFIG = {
     {
       sec: "Menyu",
       items: [
-        { id: "dash",  ic: "🏠", lb: "Bosh sahifa" },
+        { id: "dash", ic: "🏠", lb: "Bosh sahifa" },
         { id: "myatt", ic: "📋", lb: "Mening davomatim" },
       ],
     },
   ],
 };
 
-const AV_CLASS = { admin: "av-a", teacher: "av-t", student: "av-s" };
+const AV_CLASS = { admin: "av-a", teacher: "av-t", student: "av-s", direktor: 'av-d' };
 const ROLE_LABEL = {
-  admin:   "👑 Admin",
+  direktor: "🧓 Direktor",
+  admin: "👑 Admin",
   teacher: (u) => `👨‍🏫 ${u.cls}`,
   student: (u) => `👨‍🎓 ${u.cls}`,
 };
 
-export default function Sidebar({ user, page, setPage, onLogout, theme, onToggleTheme }) {
+export default function Sidebar({ user, page, direktorPage, setPage, setDirektorPage, onLogout, theme, onToggleTheme }) {
   const sections = NAV_CONFIG[user.role] || [];
   const roleTag =
     typeof ROLE_LABEL[user.role] === "function"
@@ -54,7 +64,6 @@ export default function Sidebar({ user, page, setPage, onLogout, theme, onToggle
       : ROLE_LABEL[user.role];
 
   const isLight = theme === "light";
-
   return (
     <div className="sb">
       {/* Logo */}
@@ -76,8 +85,8 @@ export default function Sidebar({ user, page, setPage, onLogout, theme, onToggle
             {sec.items.map((it) => (
               <div
                 key={it.id}
-                className={`ni${page === it.id ? " on" : ""}`}
-                onClick={() => setPage(it.id)}
+                className={`ni${page === it.id || direktorPage === it.id ? " on" : ""}`}
+                onClick={() => { setPage(it.id); setDirektorPage(it.id) }}
               >
                 <span className="ni-ic">{it.ic}</span>
                 {it.lb}
