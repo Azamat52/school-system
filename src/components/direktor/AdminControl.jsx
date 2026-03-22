@@ -1,21 +1,19 @@
 import { useState } from "react";
-import { TODAY, SUBJECTS, CLASSES } from "../../constants";
+import { TODAY } from "../../constants";
 import { uid, ini } from "../../helpers";
 import Modal from "../Modal";
 
 const EMPTY_FORM = {
-  name: "", username: "", password: "",
-  subject: "Matematika", cls: "9A", phone: "", joinDate: TODAY,
+  name: "Admin", username: "", password: "admin123", phone: "", joinDate: TODAY,
 };
 
-export default function TeachersPage({ teachers, setTeachers, toast }) {
+export default function AdminControl({ admins, setAdmins, toast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [showFire, setShowFire] = useState(null);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState(EMPTY_FORM);
   const [formErr, setFormErr] = useState("");
-
-  const shown = teachers.filter((t) => filter === "all" || t.status === filter);
+  const shown = admins.filter((t) => filter === "all" || t.status === filter);
 
   function openAdd() { setShowAdd(true); setForm(EMPTY_FORM); setFormErr(""); }
 
@@ -23,43 +21,44 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
     if (!form.name.trim() || !form.username.trim() || !form.password.trim()) {
       setFormErr("Majburiy maydonlarni to'ldiring!"); return;
     }
-    if (teachers.find((t) => t.username === form.username)) {
+    if (admins.find((t) => t.username === form.username)) {
       setFormErr("Bu username allaqachon band!"); return;
     }
-    setTeachers((p) => [...p, { ...form, id: uid(), role: "teacher", status: "active" }]);
+    setAdmins((p) => [...p, { ...form, id: uid(), role: "admin", status: "active" }]);
     setShowAdd(false);
-    toast("Yangi ustoz qo'shildi!");
+    toast("Yangi admin tayinlandi!");
   }
 
   function fire(id) {
-    setTeachers((p) => p.map((t) => t.id === id ? { ...t, status: "fired" } : t));
+    setAdmins((p) => p.map((t) => t.id === id ? { ...t, status: "fired" } : t));
     setShowFire(null);
-    toast("Ustoz ishdan bo'shatildi", "err");
+    toast("Adminlik huquqi olib tashlandi", "err");
   }
 
   function reinstate(id) {
-    setTeachers((p) => p.map((t) => t.id === id ? { ...t, status: "active" } : t));
-    toast("Ustoz qayta qabul qilindi!");
+    setAdmins((p) => p.map((t) => t.id === id ? { ...t, status: "active" } : t));
+    toast("Adminlik huquqi qayta berildi!");
   }
 
   const textFields = [
-    ["Ism Familiya *", "name", "To'liq ism", "text"],
+    ["Huquq *", "name"],
     ["Username *", "username", "login_nomi", "text"],
     ["Parol *", "password", "••••••", "password"],
-    ["Telefon", "phone", "9X-XXX-XX-XX", "text"],
+    ["Telefon", "phone", "XX-XXX-XX-XX", "text"],
   ];
-
+  console.log(admins);
+  
   return (
     <div>
       <div className="ph">
         <div className="ph-top">
           <div>
-            <div className="ph-title">👨‍🏫 Ustozlar</div>
+            <div className="ph-title">👑 Adminlar</div>
             <div className="ph-sub">
-              {teachers.filter((t) => t.status === "active").length} faol / {teachers.length} jami
+              {admins.filter((t) => t.status === "active").length} faol / {admins.length} jami
             </div>
           </div>
-          <button className="btn btn-pri" onClick={openAdd}>➕ Yangi ustoz qabul qilish</button>
+          <button className="btn btn-pri" onClick={openAdd}>➕ Yangi admin tayinlash</button>
         </div>
       </div>
 
@@ -68,14 +67,14 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
           <select className="fs" value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option value="all">Hammasi</option>
             <option value="active">Faol</option>
-            <option value="fired">Bo'shatilgan</option>
+            <option value="fired">Huquqi olib tashlangan</option>
           </select>
         </div>
         <div className="tw">
           <table>
             <thead>
               <tr>
-                <th>#</th><th>Ism Familiya</th><th>Fan</th><th>Sinf</th>
+                <th>#</th><th>Huquq</th>
                 <th>Login</th><th>Tel</th><th>Holat</th><th>Amal</th>
               </tr>
             </thead>
@@ -92,20 +91,18 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
                         <strong>{t.name}</strong>
                       </div>
                     </td>
-                    <td style={{ color: "var(--t3)" }}>{t.subject}</td>
-                    <td><span className="badge b-b">{t.cls}</span></td>
                     <td style={{ fontFamily: "Fira Code", fontSize: 11.5, color: "var(--t3)" }}>{t.username}</td>
                     <td style={{ color: "var(--t3)", fontSize: 12 }}>{t.phone || "—"}</td>
                     <td>
                       <span className={`badge ${t.status === "active" ? "b-g" : "b-r"}`}>
-                        {t.status === "active" ? "✅ Faol" : "🚫 Bo'shatilgan"}
+                        {t.status === "active" ? "✅ Faol" : "🚫 Huquqsiz"}
                       </span>
                     </td>
                     <td>
                       {t.status === "active" ? (
-                        <button className="btn btn-sm btn-rd" onClick={() => setShowFire(t)}>🚫 Bo'shatish</button>
+                        <button className="btn btn-sm btn-rd" onClick={() => setShowFire(t)}>🚫 Huquqni olib tashlash</button>
                       ) : (
-                        <button className="btn btn-sm btn-gn" onClick={() => reinstate(t.id)}>✅ Qayta qabul</button>
+                        <button className="btn btn-sm btn-gn" onClick={() => reinstate(t.id)}>✅ Huquqni qayta tiklash</button>
                       )}
                     </td>
                   </tr>
@@ -118,7 +115,7 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
 
       {/* Add modal */}
       {showAdd && (
-        <Modal title="➕ Yangi ustoz qabul qilish" sub="Ma'lumotlarni to'ldiring" onClose={() => setShowAdd(false)}>
+        <Modal title="➕ Yangi admin tayinlash" sub="Ma'lumotlarni to'ldiring" onClose={() => setShowAdd(false)}>
           {textFields.map(([label, key, placeholder, type]) => (
             <div key={key} className="fl">
               <label>{label}</label>
@@ -126,18 +123,6 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
                 onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
             </div>
           ))}
-          <div className="fl">
-            <label>Fan *</label>
-            <select className="fi" value={form.subject} onChange={(e) => setForm((p) => ({ ...p, subject: e.target.value }))}>
-              {SUBJECTS.map((s) => <option key={s}>{s}</option>)}
-            </select>
-          </div>
-          <div className="fl">
-            <label>Mas'ul sinf *</label>
-            <select className="fi" value={form.cls} onChange={(e) => setForm((p) => ({ ...p, cls: e.target.value }))}>
-              {CLASSES.map((c) => <option key={c}>{c}</option>)}
-            </select>
-          </div>
           <div className="fl">
             <label>Ishga kirish sanasi</label>
             <input className="fi fs" type="date" value={form.joinDate}
@@ -153,8 +138,8 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
 
       {/* Fire modal */}
       {showFire && (
-        <Modal title="⚠️ Ishdan bo'shatish" sub={`${showFire.name} ni ishdan bo'shatmoqchimisiz?`} onClose={() => setShowFire(null)}>
-          <p style={{ color: "var(--t3)", fontSize: 13 }}>Bu ustoz tizimga kira olmaydi. Keyinchalik qayta qabul qilish mumkin.</p>
+        <Modal title="⚠️ Adminlik huquqini olib tahslash" sub={`${showFire.name}lik huquqini olib tashlamoqchimisiz?`} onClose={() => setShowFire(null)}>
+          <p style={{ color: "var(--t3)", fontSize: 13 }}>Bu bu admin tizimga kira olmaydi. Keyinchalik huquqni qayta tiklash mumkin.</p>
           <div className="mrow">
             <button className="btn btn-blue" onClick={() => setShowFire(null)}>Bekor</button>
             <button className="btn btn-rd" onClick={() => fire(showFire.id)}>🚫 Tasdiqlash</button>

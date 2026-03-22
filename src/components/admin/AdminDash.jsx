@@ -2,13 +2,13 @@ import { TODAY } from "../../constants";
 import { pct, pClass, pColor } from "../../helpers";
 
 export default function AdminDash({ att, teachers, students }) {
-  const todayAtt   = att.filter((a) => a.date === TODAY);
+  const todayAtt = att.filter((a) => a.date === TODAY);
   const activeStud = students.filter((s) => s.status === "active");
   const activeTeach = teachers.filter((t) => t.status === "active");
-  const present    = todayAtt.filter((a) => a.status === "present").length;
-  const absent     = todayAtt.filter((a) => a.status === "absent").length;
-  const late       = todayAtt.filter((a) => a.status === "late").length;
-  const clsList    = [...new Set(activeStud.map((s) => s.cls))].slice(0, 4);
+  const present = todayAtt.filter((a) => a.status === "present").length;
+  const absent = todayAtt.filter((a) => a.status === "absent").length;
+  const late = todayAtt.filter((a) => a.status === "late").length;
+  const clsList = [...new Set(activeStud.map((s) => s.cls))].slice(0, 4);
 
   return (
     <div>
