@@ -3,8 +3,9 @@ import { TODAY } from "../../constants";
 import { uid, ini } from "../../helpers";
 import Modal from "../Modal";
 
+
 const EMPTY_FORM = {
-  name: "Admin", username: "", password: "admin123", phone: "", joinDate: TODAY,
+  name: "Admin", username: "", password: "admin123", pays: "", phone: "", joinDate: TODAY,
 };
 
 export default function AdminControl({ admins, setAdmins, toast }) {
@@ -14,11 +15,10 @@ export default function AdminControl({ admins, setAdmins, toast }) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [formErr, setFormErr] = useState("");
   const shown = admins.filter((t) => filter === "all" || t.status === filter);
-
   function openAdd() { setShowAdd(true); setForm(EMPTY_FORM); setFormErr(""); }
 
   function add() {
-    if (!form.name.trim() || !form.username.trim() || !form.password.trim()) {
+    if (form.name.length == 0 || form.username.length == 0 || form.password.length == 0 || form.pays.length == 0 || form.phone.length == 0 ) {
       setFormErr("Majburiy maydonlarni to'ldiring!"); return;
     }
     if (admins.find((t) => t.username === form.username)) {
@@ -44,9 +44,8 @@ export default function AdminControl({ admins, setAdmins, toast }) {
     ["Huquq *", "name"],
     ["Username *", "username", "login_nomi", "text"],
     ["Parol *", "password", "••••••", "password"],
-    ["Telefon", "phone", "XX-XXX-XX-XX", "text"],
+    ["Telefon", "phone", "XX-XXX-XX-XX", "number"],
   ];
-  console.log(admins);
   
   return (
     <div>
@@ -119,18 +118,20 @@ export default function AdminControl({ admins, setAdmins, toast }) {
           {textFields.map(([label, key, placeholder, type]) => (
             <div key={key} className="fl">
               <label>{label}</label>
-              <input className="fi" type={type} placeholder={placeholder} value={form[key]}
-                onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
+              <input className="fi" type={type} placeholder={placeholder} value={form[key]} onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
             </div>
           ))}
           <div className="fl">
             <label>Ishga kirish sanasi</label>
-            <input className="fi fs" type="date" value={form.joinDate}
-              onChange={(e) => setForm((p) => ({ ...p, joinDate: e.target.value }))} />
+            <input className="fi fs" type="date" value={form.joinDate} onChange={(e) => setForm((p) => ({ ...p, joinDate: e.target.value }))} />
+          </div>
+          <div className="fl">
+            <label>Oylik maosh</label>
+            <input className="fi fs" type="number" placeholder={"Oylik maosh"} onChange={(e) => setForm((p) => ({...p, pays: Number(e.target.value)})) } />
           </div>
           {formErr && <div className="err-box">{formErr}</div>}
           <div className="mrow">
-            <button className="btn btn-rd" onClick={() => setShowAdd(false)}>Bekor</button>
+            <button className="btn btn-rd" onClick={() => setShowAdd(false)}>Bekor qilish</button>
             <button className="btn btn-pri" onClick={add}>✅ Qabul qilish</button>
           </div>
         </Modal>
@@ -138,7 +139,7 @@ export default function AdminControl({ admins, setAdmins, toast }) {
 
       {/* Fire modal */}
       {showFire && (
-        <Modal title="⚠️ Adminlik huquqini olib tahslash" sub={`${showFire.name}lik huquqini olib tashlamoqchimisiz?`} onClose={() => setShowFire(null)}>
+        <Modal title="⚠️ Adminlik huquqini olib tashlash" sub={`${showFire.name}lik huquqini olib tashlamoqchimisiz?`} onClose={() => setShowFire(null)}>
           <p style={{ color: "var(--t3)", fontSize: 13 }}>Bu bu admin tizimga kira olmaydi. Keyinchalik huquqni qayta tiklash mumkin.</p>
           <div className="mrow">
             <button className="btn btn-blue" onClick={() => setShowFire(null)}>Bekor</button>

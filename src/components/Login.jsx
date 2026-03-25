@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DIREKTOR } from "../constants";
 
-export default function Login({ onLogin, admins, teachers, students }) {
+export default function Login({ onLogin, admins, teachers, students, setLogged }) {
   const [tab, setTab] = useState("direktor");
   const [u, setU] = useState("");
   const [p, setP] = useState("");
@@ -13,22 +13,23 @@ export default function Login({ onLogin, admins, teachers, students }) {
 
     if (tab === "direktor" && DIREKTOR.username === u && DIREKTOR.password === p) {
       onLogin(DIREKTOR);
+      setLogged(true)
       return;
     }
     if (tab === 'admin') {
       const a = admins.find(
         (a) => a.username === u && a.password === p && a.status === 'active')
-      if (a) { onLogin(a); return; }
+      if (a) { onLogin(a); setLogged(true); return; }
     }
     if (tab === "teacher") {
       const t = teachers.find(
         (t) => t.username === u && t.password === p && t.status === "active")
-      if (t) { onLogin(t); return; }
+      if (t) { onLogin(t); setLogged(true); return; }
     }
     if (tab === "student") {
       const s = students.find(
         (s) => s.username === u && s.password === p && s.status === "active")
-      if (s) { onLogin(s); return; }
+      if (s) { onLogin(s); setLogged(true); return; }
     }
     setErr("Login yoki parol noto'g'ri!");
   }

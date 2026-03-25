@@ -5,8 +5,8 @@ const NAV_CONFIG = {
     {
       sec: "Boshqaruv",
       items: [
-        { id: "admincontrol", ic: "🛂", lb: "Adminlar Nazorati" },
-        { id: "payment", ic: "💵", lb: "Oylik Maoshlar" }, 
+        { id: "dash", ic: "🛂", lb: "Adminlar Nazorati" },
+        { id: "payment", ic: "💵", lb: "Oylik Maoshlar" },
       ],
     },
   ],
@@ -56,7 +56,7 @@ const ROLE_LABEL = {
   student: (u) => `👨‍🎓 ${u.cls}`,
 };
 
-export default function Sidebar({ user, page, direktorPage, setPage, setDirektorPage, onLogout, theme, onToggleTheme }) {
+export default function Sidebar({ user, page, setPage, onLogout, theme, onToggleTheme }) {
   const sections = NAV_CONFIG[user.role] || [];
   const roleTag =
     typeof ROLE_LABEL[user.role] === "function"
@@ -85,8 +85,8 @@ export default function Sidebar({ user, page, direktorPage, setPage, setDirektor
             {sec.items.map((it) => (
               <div
                 key={it.id}
-                className={`ni${page === it.id || direktorPage === it.id ? " on" : ""}`}
-                onClick={() => { setPage(it.id); setDirektorPage(it.id) }}
+                className={`ni${page === it.id ? " on" : ""}`}
+                onClick={() => setPage(it.id)}
               >
                 <span className="ni-ic">{it.ic}</span>
                 {it.lb}

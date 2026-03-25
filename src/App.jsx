@@ -31,14 +31,13 @@ import SMyAtt from "./components/student/SMyAtt";
 export default function App() {
   const [user, setUser] = useState(null);
   const [logged, setLogged] = useState(false)
-  const [page, setPage] = useState("dash");
-  const [direktorPage, setDirektorPage] = useState('admincontrol')
   const [admins, setAdmins] = useState(INITIAL_ADMINS)
   const [teachers, setTeachers] = useState(INITIAL_TEACHERS);
+  const [page, setPage] = useState("dash");
   const [students, setStudents] = useState(INITIAL_STUDENTS);
   const [att, setAtt] = useState(INITIAL_ATTENDANCE);
   const [toast, setToast] = useState(null);
-  
+
   // ── Theme ──
   const [theme, setTheme] = useState(
     () => localStorage.getItem("edutrack-theme") || "dark"
@@ -56,28 +55,27 @@ export default function App() {
   function showToast(msg, type = "ok") { setToast({ msg, type }); }
   function login(u) {
     setUser(u); setPage("dash");
-    console.log(u)
   }
   function logout() { setUser(null); setPage("dash"); }
 
   if (!user) {
-    return <Login onLogin={login} admins={admins} teachers={teachers} students={students} />;
+    return <Login onLogin={login} admins={admins} teachers={teachers} students={students} setLogged={setLogged}/>;
   }
 
   const props = { att, setAtt, admins, setAdmins, teachers, setTeachers, students, setStudents, toast: showToast, user };
 
   function renderPage() {
     if (user.role === 'direktor') {
-      if (direktorPage ==='admincontrol') return  <AdminControl {...props}/>
-      if (direktorPage === 'payment') return <Payment {...props}/>
+      if (page === 'dash') return  <AdminControl {...props}/>
+      if (page === 'payment') return <Payment {...props}/>
       return <AdminControl {...props}/>
     }
     if (user.role === "admin") {
       if (page === "dash") return <AdminDash {...props} />;
       if (page === "att") return <AttPage {...props} />;
       if (page === "rep") return <RepPage {...props} />;
-      if (page === "teachers") return <TeachersPage {...props} />;
       if (page === "students") return <StudentsPage {...props} />;
+      if (page === "teachers") return <TeachersPage {...props} />;
       return <AdminDash {...props} />;
     }
     if (user.role === "teacher") {
@@ -89,21 +87,15 @@ export default function App() {
     if (user.role === "student") {
       if (page === "dash") return <SDash {...props} />;
       if (page === "myatt") return <SMyAtt {...props} />;
-      return [
-        <SDash {...props}/>
-        
-      ]
+      return <SDash {...props}/>
     }
   }
-  // isLogged
   return (
     <div className="shell">
       <Sidebar
         user={user}
         page={page}
-        direktorPage={direktorPage}
         setPage={setPage}
-        setDirektorPage={setDirektorPage}
         onLogout={logout}
         theme={theme}
         onToggleTheme={toggleTheme}

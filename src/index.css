@@ -589,6 +589,10 @@ body {
   animation: up 0.35s ease;
 }
 
+.workers{
+  animation: up 0.4s ease;
+}
+
 .ph-top {
   display: flex;
   align-items: flex-start;
@@ -606,7 +610,7 @@ body {
 .ph-sub {
   color: var(--t3);
   font-size: 13px;
-  margin-top: 3px;
+  margin: 3px 0px 15px 0px;
 }
 
 /* ── Card ── */
@@ -617,6 +621,44 @@ body {
   padding: 20px;
   animation: up 0.4s ease;
   margin-bottom: 16px;
+}
+
+.pays{
+  background: var(--s1);
+  border: 1px solid var(--b1);
+  border-radius: var(--rad);
+  padding: 20px;
+  animation: up 0.4s ease;
+  margin-bottom: 16px;
+}
+
+.salary-on{
+  background: rgba(52, 211, 153, .15);
+  color: var(--a3);
+  border: 1px solid rgba(52, 211, 153, .22);
+  border-radius: 15px;
+  width: max-content;
+  padding: 5px 10px;
+}
+
+.salary-off{
+  background: rgba(248, 113, 113, .12);
+  color: var(--r1);
+  border: 1px solid rgba(248, 113, 113, .22);
+  border-radius: 15px;
+  width: max-content;
+  padding: 5px 10px;
+}
+
+.edit{
+  transition: ease 0.3s all;
+  height: 100%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.edit:hover{
+  transform: translateY(-3px);
 }
 
 .ch {
@@ -1206,3 +1248,4 @@ input[type=date].fs {
 .toggle-pill.on .toggle-thumb {
   transform: translateX(18px);
 }
+/*-------------------------------------------------- direktor pages -------------------------*/
