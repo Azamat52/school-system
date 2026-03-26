@@ -24,7 +24,7 @@
   --w1: #fbbf24;
   --t1: #f0f6ff;
   --t2: #94b4d4;
-  --t3: #546a85;
+  --t3: #29394c;
   --t4: #2d4259;
   --rad: 12px;
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
@@ -650,15 +650,24 @@ body {
   padding: 5px 10px;
 }
 
+
 .edit{
   transition: ease 0.3s all;
-  height: 100%;
   padding: 8px;
   cursor: pointer;
 }
 
 .edit:hover{
   transform: translateY(-3px);
+}
+
+.un-edit{
+  cursor: not-allowed;
+  transition: ease 0.3s all;
+}
+
+.un-edit:hover{
+  color: var(--t3);
 }
 
 .ch {

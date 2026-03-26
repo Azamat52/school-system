@@ -42,7 +42,7 @@ export default function AdminControl({ admins, setAdmins, toast }) {
 
   const textFields = [
     ["Huquq *", "name"],
-    ["Username *", "username", "login_nomi", "text"],
+    ["Username *", "username", "Login_nomi", "text"],
     ["Parol *", "password", "••••••", "password"],
     ["Telefon", "phone", "XX-XXX-XX-XX", "number"],
   ];
