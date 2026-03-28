@@ -15,7 +15,7 @@ export const DIREKTOR = {
   password: "direktor123",
   role: "direktor",
   name: "Direktor",
-  complains: true,
+  complains: false,
 }
 
 export const INITIAL_ADMINS = [

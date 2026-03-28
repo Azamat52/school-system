@@ -36,6 +36,7 @@ export default function App() {
   const [page, setPage] = useState("dash");
   const [students, setStudents] = useState(INITIAL_STUDENTS);
   const [att, setAtt] = useState(INITIAL_ATTENDANCE);
+  const [complains, setComplains] = useState();
   const [toast, setToast] = useState(null);
 
   // ── Theme ──
@@ -62,7 +63,7 @@ export default function App() {
     return <Login onLogin={login} admins={admins} teachers={teachers} students={students} setLogged={setLogged}/>;
   }
 
-  const props = { att, setAtt, admins, setAdmins, teachers, setTeachers, students, setStudents, toast: showToast, user };
+  const props = { att, setAtt, complains, setComplains, admins, setAdmins, teachers, setTeachers, students, setStudents, toast: showToast, user };
 
   function renderPage() {
     if (user.role === 'direktor') {
@@ -99,6 +100,10 @@ export default function App() {
         onLogout={logout}
         theme={theme}
         onToggleTheme={toggleTheme}
+        admins={admins}
+        teachers={teachers}
+        students={students}
+        setComplains={setComplains}
       />
       <main className="main">{renderPage()}</main>
       {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}

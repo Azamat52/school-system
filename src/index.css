@@ -53,6 +53,10 @@
   --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
+.hidden{
+  display: none;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--bg);
@@ -271,7 +275,7 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   outline: none;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .fi:focus {
@@ -282,6 +286,23 @@ body {
 
 .fi::placeholder {
   color: var(--t4);
+}
+
+.divs{
+  position: fixed;
+  width: 16.5%;
+  left: 40%;
+  top: 40%;
+}
+
+.name{
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.name:hover {
+  border-color: var(--a1);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
 .btn-go {
@@ -324,6 +345,13 @@ body {
   border: 1px solid var(--b1);
 }
 
+.hints::-webkit-scrollbar-track{
+  background: var(--s2);
+}
+
+.hints::-webkit-scrollbar-button{
+  border-radius: 10px;
+}
 .hints-ttl {
   font-size: 10.5px;
   color: var(--t4);
@@ -515,6 +543,24 @@ body {
   background: var(--s2);
   border-radius: 10px;
   margin-bottom: 10px;
+}
+
+.complain{
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 10px;
+  background: var(--s2);
+  border: 1.5px solid var(--b1);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.complain:hover{
+  border-color: var(--a1);
+  background: var(--s3);
 }
 
 .av {

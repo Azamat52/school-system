@@ -39,7 +39,6 @@ export default function Login({ onLogin, admins, teachers, students, setLogged }
     setU("");
     setP("");
     setErr("");
-    console.log(id);
   }
 
   const TabSwitcher = (tab) => {
@@ -63,7 +62,7 @@ export default function Login({ onLogin, admins, teachers, students, setLogged }
   //     : tab === "teacher"
   //     ? teachers.filter((t) => t.status === "active").slice(0, 4)
   //     : students.filter((s) => s.status === "active").slice(0, 4)
-      
+
 
   const roleLabel = { admin: "Admin", teacher: "Ustoz", student: "O'quvchi", direktor: 'Direktor' };
   const roleClass = { admin: "hr-a", teacher: "hr-t", student: "hr-s", direktor: 'hr-d' };
@@ -135,9 +134,7 @@ export default function Login({ onLogin, admins, teachers, students, setLogged }
             >
               <span className="hn">{x.name}</span>
               <span className="hc">{x.username}/{x.password}</span>
-              <span className={`hr ${roleClass[x.role]}`}>
-                {roleLabel[x.role]}
-              </span>
+              <span className={`hr ${roleClass[x.role]}`}>{roleLabel[x.role]}</span>
             </div>
           ))}
         </div>
