@@ -36,8 +36,8 @@ export default function App() {
   const [page, setPage] = useState("dash");
   const [students, setStudents] = useState(INITIAL_STUDENTS);
   const [att, setAtt] = useState(INITIAL_ATTENDANCE);
-  const [complains, setComplains] = useState();
-  const [toast, setToast] = useState(null);
+  const [complains, setComplains] = useState([]);
+  const [toast, setToast] = useState({});
 
   // ── Theme ──
   const [theme, setTheme] = useState(
@@ -91,6 +91,8 @@ export default function App() {
       return <SDash {...props}/>
     }
   }
+
+  console.log(complains);
   return (
     <div className="shell">
       <Sidebar
@@ -104,6 +106,8 @@ export default function App() {
         teachers={teachers}
         students={students}
         setComplains={setComplains}
+        complains={complains}
+        toast={showToast}
       />
       <main className="main">{renderPage()}</main>
       {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}

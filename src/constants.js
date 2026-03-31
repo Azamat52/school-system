@@ -15,20 +15,19 @@ export const DIREKTOR = {
   password: "direktor123",
   role: "direktor",
   name: "Direktor",
-  complains: false,
 }
 
 export const INITIAL_ADMINS = [
-  { id: 1, username: "admin1", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 440, phone: "97-123-45-67", complains: false, joinDate: "2022-09-01" },
-  { id: 2, username: "admin2", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 480, phone: "93-323-54-96", complains: false, joinDate: "2022-09-01" },
-  { id: 3, username: "admin3", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 410, phone: "94-193-85-24", complains: false, joinDate: "2022-09-01" },
-  { id: 4, username: "admin4", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 400, phone: "99-312-13-84", complains: false, joinDate: "2022-09-01" },
+  { id: 1, username: "admin1", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 440, phone: "97-123-45-67", joinDate: "2022-09-01" },
+  { id: 2, username: "admin2", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 480, phone: "93-323-54-96", joinDate: "2022-09-01" },
+  { id: 3, username: "admin3", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 410, phone: "94-193-85-24", joinDate: "2022-09-01" },
+  { id: 4, username: "admin4", password: "admin123", role: "admin", name: "Admin", status: "active", pays: 400, phone: "99-312-13-84", joinDate: "2022-09-01" },
 ]
 
 export const INITIAL_TEACHERS = [
-  { id: 10, username: "ustoz1", password: "ustoz123", role: "teacher", name: "Alisher Karimov", subject: "Matematika", cls: "9A", phone: "90-123-45-67", pays: 450, status: "active", complains: false, joinDate: "2022-09-01" },
-  { id: 11, username: "ustoz2", password: "ustoz123", role: "teacher", name: "Malika Yusupova", subject: "Ingliz tili", cls: "8B", phone: "91-234-56-78", pays: 490, status: "active", complains: false,joinDate: "2021-09-01" },
-  { id: 12, username: "ustoz3", password: "ustoz123", role: "teacher", name: "Bobur Toshmatov", subject: "Fizika", cls: "10A", phone: "93-345-67-89", pays: 370, status: "active", complains: false, joinDate: "2023-02-01" },
+  { id: 10, username: "ustoz1", password: "ustoz123", role: "teacher", name: "Alisher Karimov", subject: "Matematika", cls: "9A", phone: "90-123-45-67", pays: 450, status: "active", joinDate: "2022-09-01" },
+  { id: 11, username: "ustoz2", password: "ustoz123", role: "teacher", name: "Malika Yusupova", subject: "Ingliz tili", cls: "8B", phone: "91-234-56-78", pays: 490, status: "active", joinDate: "2021-09-01" },
+  { id: 12, username: "ustoz3", password: "ustoz123", role: "teacher", name: "Bobur Toshmatov", subject: "Fizika", cls: "10A", phone: "93-345-67-89", pays: 370, status: "active", joinDate: "2023-02-01" },
 ];
 
 export const INITIAL_STUDENTS = [
