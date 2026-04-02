@@ -67,6 +67,7 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
     const [formErr, setFormErr] = useState("");
     const [form, setForm] = useState({values: ""});
     const [id, setId] = useState(null);
+    const [index, setIndex] = useState("");
     const sections = NAV_CONFIG[user.role] || [];
     const roleTag =
         typeof ROLE_LABEL[user.role] === "function"
@@ -92,6 +93,7 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
     const roleLabel = { admin: "Admin", teacher: "Ustoz", student: "O'quvchi", direktor: 'Direktor' };
 
     const role = user.role === "admin" || user.role === "teacher" || user.role === "student";
+    const checking = role && user.name === name && user.id === id
     const isLight = theme === "light";
 
     const AddClass = () => {
@@ -109,7 +111,10 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
         setShow(false )
         toast("Shikoyat yuborildi")
     }
-    const NextOpening = () => { setForm({values: ""}), setFormErr(""), setShow(true), setShow2((true))}
+    const NextOpening = () => { setForm({values: ""}); setFormErr(""); setShow(true); setName(""); setId(""); setIndex(""); setTab("admin"); }
+    const NextOpening_2 = () => { setFormErr(""), setShow2(true)}
+    console.log(name, id, user.role)
+    console.log(checking)
     return (
         <div className="sb">
             {/* Logo */}
@@ -147,15 +152,25 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
                         <div className="sb-un">{user.name}</div>
                         <div className="sb-ur">{roleTag}</div>
                     </div>
-                    {role && (
-                        <div className="natifications" onClick={() => setShow2(true)} style={{opacity: complains.length === 0 ? 0 : 1}}>🔔
+                    {checking && (
+                        <div className="natifications" onClick={NextOpening_2} style={{display: complains.length > 0 ? null : "none" }}>🔔
                             <p className="checking-complain">{complains.length}</p>
                         </div>)}
-                        <Modal></Modal>
+                    {show2 && (
+                    <Modal title={"Sizga kelgan shikoyatlar"} sub={"Shikoyat"} onClose={() => setShow2(false)}>
+                        <p>{DIREKTOR.name} dan</p>
+                        {
+                            complains.map((c) => {
+                                return (
+                                    <div className="completed_complain"><i className="fa-solid fa-circle-exclamation"></i> {c.values}</div>
+                                )
+                            })
+                        }
+                     </Modal>)}
                 </div>
                 {user.role === "direktor" && <div className="complain" onClick={NextOpening}>⚠️Shikoyat qilish</div>}
                 {show && (
-                        <Modal title={name ? `${name} ga shikoyat qilish` : "Foydalanuvchiga shikoyat qilish"} sub={"Shikoyat"} onClose={() => setShow(false)}>
+                        <Modal title={name === "Admin" ? `${index + 1}-${name} ga shikoyat qilish` : name ? `${name} ga shikoyat qilish` : "Foydalanuvchiga shikoyat qilish"} sub={"Shikoyat"} onClose={() => setShow(false)}>
                             <div className="rtabs">
                                 {ComplainTabs.map((([id, ic, lb]) => {
                                     return (
@@ -167,7 +182,7 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
                             {quickList.length > 0 ? <div className="hints divs hidden" style={{marginBottom: "25px", maxHeight: "220px", overflowY: "auto"}}>
                                 <h3>Kimga shikoyat qilmoqchisiz?</h3>
                                 {quickList.map((x, i) => (
-                                    <div key={x.id} className="fi name" onClick={() => { setName(x.name); setId(x.id); AddClass() }}>{x.length === 0 ? "Ma'lumot topilmadi 🔎" : `${i + 1} - ${x.name} Huquq(${roleLabel[x.role]})`}</div>
+                                    <div key={x.id} className="fi name" onClick={() => { setName(x.name); setId(x.id); setIndex(i); AddClass() }}>{x.length === 0 ? "Ma'lumot topilmadi 🔎" : `${i + 1} - ${x.name} Huquq(${roleLabel[x.role]})`}</div>
                                 ))}
                             </div> : <div className="hints" style={{marginBottom: "25px", color: "#cfcfcf"}}>🔎 Ma'lumot topilmadi </div>}
                             <form className="fl">

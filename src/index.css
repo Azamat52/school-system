@@ -621,6 +621,15 @@ body {
   top: 8px;
 }
 
+.completed_complain {
+  background: rgba(248, 113, 113, .14);
+  border: 1px solid rgba(248, 113, 113, .28);
+  color: var(--r1);
+  margin: 15px 0;
+  border-radius: 10px;
+  padding: 10px;
+}
+
 .btn-out {
   width: 100%;
   padding: 9px;
