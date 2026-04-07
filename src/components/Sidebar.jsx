@@ -90,22 +90,16 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
         }
     }
     const quickList = TabSwitcher(tab);
-    const roleLabel = { admin: "Admin", teacher: "Ustoz", student: "O'quvchi", direktor: 'Direktor' };
     const roles = user.role === "admin" || user.role === "teacher" || user.role === "student"
     const checked_complains = complains.filter((c) => c.id === user.id);
     const isLight = theme === "light";
 
-    const AddClass = () => {
-        const children = document.querySelector(".divs")
-        children.classList.toggle("hidden")
-    }
     const GetValues = (e) => {
         e.preventDefault();
         if (value.length === 0) {
             setFormErr("Shikoyatni to'ldiring"); return;
         }
-        const selected_user = quickList.find((x) =>  x.id === id && x.name === name)
-        if (!selected_user) {
+         if (name === "" && id === "") {
             setFormErr("Foydalanuvchi topilmadi"); return;
         }
         const newComplain = {
@@ -123,9 +117,8 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
         setShow(false)
         toast("Shikoyat yuborildi")
     }
-    const NextOpening = () => { setFormErr(""); setShow(true); setName(""); setId(""); setValue(""); setIndex(""); setTab("admin"); }
+    const NextOpening = () => { setFormErr(""); setShow(true); setName(""); setId(""); setValue(""); setIndex(""); setTab(null); }
     const NextOpening_2 = () => { setFormErr(""); setShow2(true); }
-    console.log(user.id)
     return (
         <div className="sb">
             {/* Logo */}
@@ -187,23 +180,28 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
                             <div className="rtabs">
                                 {ComplainTabs.map((([id, ic, lb]) => {
                                     return (
-                                        <button key={id} className={`rt${tab === id ? " on" : ""}`} onClick={() => {setTab(id); AddClass()}}>{ic} {lb} ⬇️</button>
+                                        <button key={id} className={`rt${tab === id ? " on" : ""}`} onClick={() => { setTab(tab === id ? null : id); }}>{ic} {lb} <i className={`fa-solid fa-angle-right ${tab === id ? "transform" : "" }`}></i>
+                                            {/* User hints */}
+                                            {tab === id && (
+                                                <div className={`hints divs`}>
+                                                    <h3>Kimga shikoyat yuborasiz?</h3>
+                                                    {quickList.map((x, i) => (
+                                                        <div key={x.id} className="fi name" onClick={() => {setName(x.name); setId(x.id); setIndex(i); }}>
+                                                            {i + 1} - {x.name} ({x.role})
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </button>
                                     )
                                 }))}
                             </div>
-                            {/* User hints */}
-                            {quickList.length > 0 ? <div className="hints divs hidden" style={{marginBottom: "25px"}}>
-                                <h3>Kimga shikoyat qilmoqchisiz?</h3>
-                                {quickList.map((x, i) => (
-                                    <div key={x.id} className="fi name" onClick={() => { setName(x.name); setId(x.id); setIndex(i); AddClass()}}>{x.length === 0 ? "Ma'lumot topilmadi 🔎" : `${i + 1} - ${x.name} Huquq(${roleLabel[x.role]})`}</div>
-                                ))}
-                            </div> : <div className="hints" style={{marginBottom: "25px", color: "#cfcfcf"}}>🔎 Ma'lumot topilmadi </div>}
                             <form className="fl" onSubmit={GetValues}>
                                 <textarea name="" id="" style={{width: "100%", height: "20vh", marginBottom: "20px"}} className="fi" placeholder={"Shikoyatingizni yozing"} onChange={(e) => setValue(e.target.value)}></textarea>
                                 {formErr && <div className="err-box">{formErr}</div>}
                                 <button className="btn btn-rd" onClick={() => setShow(false)} style={{marginTop: "20px"}}>Bekor qilish</button>
-                                <button className="btn btn-rd" type={"reset"} style={{marginLeft: "10px"}}>Tozalash</button>
-                                <button className="btn btn-pri" style={{marginLeft: "10px"}}>Yuborish</button>
+                                <button className="btn btn-rd" type={"reset"} style={{marginLeft: "10px"}} onClick={() => setValue("")} >Tozalash</button>
+                                <button className="btn btn-pri" style={{marginLeft: "10px"}} type={"submit"}>Yuborish</button>
                             </form>
                         </Modal>
                 )}
@@ -223,5 +221,6 @@ export default function Sidebar({user, page, setPage, toast, onLogout, theme, on
                 <button className="btn-out" onClick={onLogout}>🚪 Chiqish</button>
             </div>
         </div>
+    //
     );
 }

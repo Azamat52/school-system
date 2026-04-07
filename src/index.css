@@ -14,6 +14,7 @@
   --s1: #0d1421;
   --s2: #111c2e;
   --s3: #162035;
+  --s4: #f8fafc;
   --b1: rgba(148, 210, 255, 0.1);
   --b2: rgba(148, 210, 255, 0.06);
   --a1: #60a5fa;
@@ -37,6 +38,7 @@
   --s1: #ffffff;
   --s2: #f8fafc;
   --s3: #eef2f7;
+  --s4: #111c2e;
   --b1: rgba(59, 130, 246, 0.12);
   --b2: rgba(59, 130, 246, 0.06);
   --a1: #2563eb;
@@ -78,6 +80,88 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--a2);
   border-radius: 3px;
+}
+
+.modal_2{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PreLoader {
+  width: 20%;
+}
+
+.text{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.text p{
+  font-size: 12.5px;
+}
+
+.text div{
+  font-weight: 700;
+}
+
+.dot {
+  display: inline-block;
+  margin-left: 0.8px;
+}
+
+dot1{
+  animation: none;
+}
+
+.dot2{
+  animation: dot2 1s infinite;
+}
+
+.dot3{
+  animation: dot3 1s infinite;
+}
+
+@keyframes dot2 {
+  0%, 100%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-2.8px);
+  }
+}
+@keyframes dot3 {
+  0%, 100%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-4.3px);
+  }
+}
+
+.dot2{
+  animation-delay: 0.2s;
+}
+
+.dot3{
+  animation-delay: 0.4s;
+}
+
+.bar{
+  border: 1px solid;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.bar_in{
+  background: var(--s4);
+  position: absolute;
+  border-radius: 5px;
+  height: 8px;
 }
 
 /* ── Animations ── */
@@ -244,12 +328,20 @@ body {
   background: var(--s3);
   color: var(--t1);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  position: relative;
 }
 
 .rt:hover:not(.on) {
   color: var(--t2);
 }
 
+.fa-angle-right{
+  transition: 0.2s;
+}
+
+.transform{
+  transform: rotate(90deg);
+}
 /* Form field */
 .fl {
   margin-bottom: 15px;
@@ -289,10 +381,9 @@ body {
 }
 
 .divs{
-  position: fixed;
-  width: 16.5%;
-  left: 40%;
-  top: 40%;
+  position: absolute;
+  left: 0;
+  width: 220%
 }
 
 .date_parent{

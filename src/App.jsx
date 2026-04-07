@@ -27,10 +27,11 @@ import MyClass from "./components/teacher/MyClass";
 // Student pages
 import SDash from "./components/student/SDash";
 import SMyAtt from "./components/student/SMyAtt";
+import PreLoader from "./components/PreLoader.jsx";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [logged, setLogged] = useState(false)
+  const [complating, setComplating] = useState(false)
   const [admins, setAdmins] = useState(INITIAL_ADMINS)
   const [teachers, setTeachers] = useState(INITIAL_TEACHERS);
   const [page, setPage] = useState("dash");
@@ -56,16 +57,17 @@ export default function App() {
 
   function showToast(msg, type = "ok") { setToast({ msg, type }); }
   function login(u) {
-    setUser(u); setPage("dash"); showToast("Muvofaqiyatli kirildi");
+    setUser(u);
+    setPage("dash");
+    showToast("Muvofaqiyatli kirildi");
   }
   function logout() { setUser(null); setPage("dash"); }
 
   if (!user) {
-    return <Login onLogin={login} admins={admins} teachers={teachers} students={students} setLogged={setLogged}/>;
+    return <Login onLogin={login} admins={admins} teachers={teachers} students={students} setComplating={setComplating}/>;
   }
 
   const props = { att, setAtt, complains, setComplains, admins, setAdmins, teachers, setTeachers, students, setStudents, toast: showToast, user };
-
   function renderPage() {
     if (user.role === 'direktor') {
       if (page === 'dash') return  <AdminControl {...props}/>
@@ -94,23 +96,26 @@ export default function App() {
   }
 
   return (
-    <div className="shell">
-      <Sidebar
-        user={user}
-        page={page}
-        setPage={setPage}
-        onLogout={logout}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-        admins={admins}
-        teachers={teachers}
-        students={students}
-        setComplains={setComplains}
-        complains={complains}
-        toast={showToast}
-      />
-      <main className="main">{renderPage()}</main>
-      {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
-    </div>
+      <>
+        {complating ?
+        (<div className="shell">
+          <Sidebar
+              user={user}
+              page={page}
+              setPage={setPage}
+              onLogout={logout}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+              admins={admins}
+              teachers={teachers}
+              students={students}
+              setComplains={setComplains}
+              complains={complains}
+              toast={showToast}
+          />
+          <main className="main">{renderPage()}</main>
+          {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)}/>}
+        </div>) : <PreLoader setComplating={setComplating} complating={complating} />}
+      </>
   );
 }
