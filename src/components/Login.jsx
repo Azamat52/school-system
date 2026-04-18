@@ -5,6 +5,7 @@ export default function Login({ onLogin, admins, teachers, students, setComplati
   const [tab, setTab] = useState("direktor");
   const [u, setU] = useState("");
   const [p, setP] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
   const [err, setErr] = useState("");
 
   function go(e) {
@@ -104,11 +105,14 @@ export default function Login({ onLogin, admins, teachers, students, setComplati
             <label>Parol</label>
             <input
               className="fi"
-              type="password"
+              type={showPassword ? "password" : "text"}
               placeholder="••••••••"
               value={p}
               onChange={(e) => setP(e.target.value)}
             />
+            <button className="changing_password" type="button" onClick={() => setShowPassword((prev) => !prev)}>
+              {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+            </button>
           </div>
           <button className="btn-go" type="submit">
             Kirish →

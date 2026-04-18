@@ -10,6 +10,7 @@ const EMPTY_FORM = {
 
 export default function AdminControl({ admins, setAdmins, toast }) {
   const [showAdd, setShowAdd] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [showFire, setShowFire] = useState(null);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState(EMPTY_FORM);
@@ -43,7 +44,7 @@ export default function AdminControl({ admins, setAdmins, toast }) {
   const textFields = [
     ["Huquq *", "name"],
     ["Username *", "username", "Login_nomi", "text"],
-    ["Parol *", "password", "••••••", "password"],
+    ["Parol *", "password", "••••••", `${showPassword ? "password" : "text"}`],
     ["Telefon", "phone", "XX-XXX-XX-XX", "number"],
   ];
   
@@ -119,7 +120,11 @@ export default function AdminControl({ admins, setAdmins, toast }) {
             <div key={key} className="fl">
               <label>{label}</label>
               <input className="fi" type={type} placeholder={placeholder} value={form[key]} onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
-            </div>
+              {key === "password" && (
+                  <button className="changing_password" type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+                  </button>)}
+          </div>
           ))}
           <div className="fl">
             <label>Ishga kirish sanasi</label>

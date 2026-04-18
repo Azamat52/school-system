@@ -11,6 +11,7 @@ const EMPTY_FORM = {
 export default function TeachersPage({ teachers, setTeachers, toast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [showFire, setShowFire] = useState(null);
+  const [showPassword, setShowPassword] = useState(true);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState(EMPTY_FORM);
   const [formErr, setFormErr] = useState("");
@@ -45,7 +46,7 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
   const textFields = [
     ["Ism Familiya *", "name", "To'liq ism", "text"],
     ["Username *", "username", "login_nomi", "text"],
-    ["Parol *", "password", "••••••", "password"],
+    ["Parol *", "password", "••••••", `${showPassword ? "password" : "text"}`],
     ["Telefon", "phone", "9X-XXX-XX-XX", "text"],
     ["Oylik maosh", "pays", "Oylik maosh", "number"],
   ];
@@ -125,6 +126,10 @@ export default function TeachersPage({ teachers, setTeachers, toast }) {
               <label>{label}</label>
               <input className="fi" type={type} placeholder={placeholder} value={form[key]}
                 onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
+              {key === "password" && (
+                  <button className="changing_password" type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+                  </button>)}
             </div>
           ))}
           <div className="fl">

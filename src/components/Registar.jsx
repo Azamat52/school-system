@@ -9,6 +9,7 @@ const EMPTY_FORM_STUDENTS = {
 export default function Registar({ setStudents, students, admins, teachers, direktor, setPath }) {
     const [form, setForm] = useState(EMPTY_FORM_STUDENTS)
     const [err, setErr] = useState("");
+    const [showPassword, setShowPassword] = useState(true);
     const [checkPassword, setCheckPassword] = useState({text: "", width: 0});
 
     function registar(e) {
@@ -28,7 +29,6 @@ export default function Registar({ setStudents, students, admins, teachers, dire
     }
     const CheckingPassword = (value) => {
         const length = value.trim().length;
-        console.log(length)
         if (length === 0){
             setCheckPassword((p) => ({...p, text: "", width: 0}))
         } else if (length <= 3) {
@@ -76,13 +76,16 @@ export default function Registar({ setStudents, students, admins, teachers, dire
                         <label>Parol</label>
                         <input
                             className="fi"
-                            type="password"
                             placeholder="••••••••"
+                            type={showPassword ? "password" : "text"}
                             onChange={e => {
                                 setForm((p) => ({...p, password: e.target.value}));
                                 CheckingPassword(e.target.value)
                             }}
                         />
+                        <button className="changing_password" type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                            {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+                        </button>
                     </div>
                     {checkPassword && (
                         <div className={`Checking_password ${checkPassword.width === 0 && "hidden"}`}>
