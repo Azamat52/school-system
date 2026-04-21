@@ -63,6 +63,10 @@
     display: none;
 }
 
+textarea{
+    resize: none;
+}
+
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background: var(--bg);
@@ -477,8 +481,9 @@ body {
 
 .divs {
     position: absolute;
-    top: 100%;
-    left: auto;
+    top: 90%;
+    left: -50%;
+    right: 50%;
     width: 300px;
     z-index: 999;
 }
@@ -641,13 +646,30 @@ body {
     top: 0;
     left: 0;
     height: 100vh;
-    overflow-y: auto;
     z-index: 200;
+    transition: width 0.5s ease;
+}
+
+.closed-sb{
+    width: 65px;
+    background: var(--s1);
+    border-right: 1px solid var(--b1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 200;
+    transition: width 0.5s ease;
 }
 
 .sb-head {
     padding: 22px 18px 16px;
     border-bottom: 1px solid var(--b1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sb-logo {
@@ -678,6 +700,22 @@ body {
     font-size: 10px;
     color: var(--t4);
     font-family: 'Fira Code', monospace;
+}
+
+.toggle_sidebar{
+    border: none;
+    background: none;
+    color: var(--a1);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.4s;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.toggle_sidebar_on:hover{
+    background: linear-gradient(135deg, rgba(96, 165, 250, .11), rgba(167, 139, 250, .11));
+    border-color: rgba(96, 165, 250, 0.2);
 }
 
 .sb-nav {
@@ -748,6 +786,16 @@ body {
     margin-bottom: 10px;
 }
 
+.sb-user-off{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--s2);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
 .complain {
     align-items: center;
     text-align: center;
@@ -794,6 +842,10 @@ body {
     background: linear-gradient(135deg, var(--a2), #a78bfa);
 }
 
+.openComplain{
+    cursor: pointer;
+}
+
 .sb-un {
     font-size: 12.5px;
     font-weight: 700;
@@ -810,6 +862,14 @@ body {
     cursor: pointer;
     font-size: 25px;
     padding-left: 50px;
+}
+
+.number{
+    position: absolute;
+    cursor: pointer;
+    font-size: 25px;
+    top: -5px;
+    right: -6px;
 }
 
 .checking-complain {

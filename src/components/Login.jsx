@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { DIREKTOR } from "../constants";
 
-export default function Login({ onLogin, admins, teachers, students, setComplating, setPath }) {
+export default function Login({ onLogin, admins, teachers, students, direktor, setComplating, setPath }) {
   const [tab, setTab] = useState("direktor");
   const [u, setU] = useState("");
   const [p, setP] = useState("");
@@ -13,8 +12,8 @@ export default function Login({ onLogin, admins, teachers, students, setComplati
     if (u.trim() === "" || p.trim() === ""){
       setErr("Majburiy maydonlarni to'ldiring"); return;
     }
-    if (tab === "direktor" && DIREKTOR.username === u && DIREKTOR.password === p) {
-      onLogin(DIREKTOR);
+    if (tab === "direktor" && direktor.username === u && direktor.password === p) {
+      onLogin(direktor);
       setComplating(false);
       return;
     }
@@ -45,7 +44,7 @@ export default function Login({ onLogin, admins, teachers, students, setComplati
 
   const TabSwitcher = (tab) => {
     if(tab === 'direktor'){
-      return [DIREKTOR]
+      return direktor ? [direktor] : [];
     }
     if(tab === 'admin'){
       return admins.filter((a) => a.status === 'active')

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./index.css";
-import {INITIAL_TEACHERS, INITIAL_STUDENTS, INITIAL_ADMINS, INITIAL_ATTENDANCE, DIREKTOR} from "./constants";
+
+// useFetch
+import useFetch from "./hooks/useFetch.jsx";
 
 // Shared components
 import Login from "./components/Login";
@@ -30,20 +32,29 @@ import SDash from "./components/student/SDash";
 import SMyAtt from "./components/student/SMyAtt";
 
 export default function App() {
+
+  // Using useFetch
+  const {data, loading, error} = useFetch("http://localhost:3001/all");
+  console.log(data && data)
   const [user, setUser] = useState(null);
   const [complating, setComplating] = useState(false)
-  const [admins, setAdmins] = useState(INITIAL_ADMINS)
-  const [teachers, setTeachers] = useState(INITIAL_TEACHERS);
+  const [admins, setAdmins] = useState([])
+  const [teachers, setTeachers] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [att, setAtt] = useState([]);
   const [page, setPage] = useState("dash");
-  const [students, setStudents] = useState(INITIAL_STUDENTS);
-  const [att, setAtt] = useState(INITIAL_ATTENDANCE);
   const [complains, setComplains] = useState([]);
   const [toast, setToast] = useState({});
   const [path, setPath] = useState("login");
 
-
-  // Using fetch
-
+  useEffect(() => {
+    if (data) {
+      setAdmins(data.admins || []);
+      setTeachers(data.teachers || []);
+      setStudents(data.students || []);
+      setAtt(data.attendence || []);
+    }
+  }, [data]);
 
 
   // ── Theme ──
@@ -69,10 +80,10 @@ export default function App() {
   function logout() { setUser(null); setPage("dash"); }
 
   if (!user) {
-    if (path === "login") return <Login onLogin={login} admins={admins} teachers={teachers} students={students} setComplating={setComplating} setPath={setPath} />;
-    if (path === "registar") return <Registar students={students} setStudents={setStudents} admins={admins} teachers={teachers} direktor={DIREKTOR} setPath={setPath} />
+    if (path === "login") return <Login onLogin={login} admins={admins} teachers={teachers} students={students} direktor={data && data.direktor} setComplating={setComplating} setPath={setPath} />;
+    if (path === "registar") return <Registar students={students} setStudents={setStudents} admins={admins} teachers={teachers} direktor={data && data.direktor} setPath={setPath} />
   }
-  const props = { att, setAtt, complains, setComplains, admins, setAdmins, teachers, setTeachers, students, setStudents, toast: showToast, user };
+  const props = { att, setAtt, complains, setComplains, admins, setAdmins, teachers, setTeachers, students, setStudents, direktor: data && data.direktor, toast: showToast, user };
   function renderPage() {
     if (user.role === 'direktor') {
       if (page === 'dash') return <AdminControl {...props}/>
@@ -120,7 +131,7 @@ export default function App() {
           />
           <main className="main">{renderPage()}</main>
           {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)}/>}
-        </div>) : <PreLoader setComplating={setComplating} complating={complating} />}
+        </div>) : <PreLoader setComplating={setComplating} complating={complating}/>}
       </>
   );
 }
