@@ -39,7 +39,12 @@ export default function App() {
   const [att, setAtt] = useState(INITIAL_ATTENDANCE);
   const [complains, setComplains] = useState([]);
   const [toast, setToast] = useState({});
-  const [path, setPath] = useState("registar");
+  const [path, setPath] = useState("login");
+
+
+  // Using fetch
+
+
 
   // ── Theme ──
   const [theme, setTheme] = useState(

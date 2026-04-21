@@ -12,7 +12,7 @@ export default function PreLoader ({complating, setComplating}) {
                             }
                             return prev + 1
                         });
-                    }, 20000000);
+                    }, 25);
                     return () => clearInterval(interval)
                 }
             },  [complating]);
@@ -22,11 +22,13 @@ export default function PreLoader ({complating, setComplating}) {
                 <div className="text">
                     <div>{count === 100 ? "Yakunlandi." : (
                         <div>{count >= 75 ? "Deyarli tugay deb qoldi" : "Sayt yuklanmoqda"}
-                            <span className="dot dot1">.</span>
-                            <span className="dot dot2">.</span>
-                            <span className="dot dot3">.</span>
-                            <span className="dot dot4">.</span>
-                            <span className="dot dot5">.</span>
+                            <span className="dots">
+                                <span className="dot dot1">.</span>
+                                <span className="dot dot2">.</span>
+                                <span className="dot dot3">.</span>
+                                <span className="dot dot4">.</span>
+                                <span className="dot dot5">.</span>
+                            </span>
                         </div>)}
                     </div>
                     <p>{count}%</p>
